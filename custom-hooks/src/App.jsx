@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { useFetch } from './hooks/useFetch'
 import { usePrev } from './hooks/usePrev'
+import useIsOnline from './hooks/useIsOnline'
 
 //custom hook
 function useCounter(){
@@ -22,11 +23,13 @@ function useCounter(){
 function App() {
   const [currentPost, setcurrentPost] = useState(1)
   const {data,loading} = useFetch("https://jsonplaceholder.typicode.com/todos/"+currentPost)
+  const isOnline = useIsOnline();
 
   if(loading) return <div>Loading...</div>;
 
   return (
    <div>
+    <h1>{isOnline ? "Online" : "Offline"}</h1>
     <span style={{color:"white"}}>{data.title}</span>
     <Counter/>
     <button onClick={()=>setcurrentPost(1)}>post 1</button>
